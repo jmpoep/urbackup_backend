@@ -27,6 +27,7 @@ import { BackupsTable } from "./features/backups/BackupsTable";
 import { BackupContentTable } from "./features/backups/BackupContentTable";
 import BackupErrorPage from "./features/backups/BackupsError";
 import { StatisticsPage } from "./pages/Statistics";
+import { LogsPage } from "./pages/Logs";
 import "./css/global.css";
 
 const initialDark =
@@ -41,6 +42,7 @@ export enum Pages {
   Statistics = "statistics",
   Login = "login",
   About = "about",
+  Logs = "logs",
 }
 
 export const state = proxy({
@@ -154,6 +156,15 @@ export const router = createHashRouter([
       return null;
     },
   },
+  {
+    path: `/${Pages.Logs}`,
+    element: <LogsPage />,
+    loader: async () => {
+      state.pageAfterLogin = Pages.Logs;
+      await jumpToLoginPageIfNeccessary();
+      return null;
+    },
+  },
 ]);
 
 function getSessionFromLocalStorage(): string {
@@ -216,13 +227,7 @@ const App: React.FunctionComponent = () => {
                   }}
                 >
                   {snap.loggedIn && (
-                    <div
-                      className={styles.item}
-                      style={{
-                        borderRight: "1px solid",
-                        padding: "10pt",
-                      }}
-                    >
+                    <div className={styles.sidebar}>
                       <NavSidebar />
                     </div>
                   )}
