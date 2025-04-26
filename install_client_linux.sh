@@ -326,7 +326,7 @@ then
 		fi
 	fi
 	
-	install -c urbackupclientbackend.service $SYSTEMD_DIR
+	install -c -m 644 urbackupclientbackend.service $SYSTEMD_DIR
 	systemctl enable urbackupclientbackend.service
 	
 	SYSTEMD_DBUS=yes
